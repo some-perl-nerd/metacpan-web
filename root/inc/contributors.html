@@ -4,7 +4,13 @@
     <div class="contributors-header">and <% contributors.size %> contributors</div>
     <div align="right">
         <button class="btn-link"
-            onclick="$(this).hide(); $('#contributors ul').slideDown(); return false;"
+            onclick="$(this).hide(); 
+                     $('.lazy-gravitar').each( function(i,e) {
+                         e.attr( 'src', e.attr('data-src') );
+                         e.removeClass('lazy-gravitar');
+                     });
+                     $('#contributors ul').slideDown();  
+                     return false;"
         >show them</button>
     </div>
     <ul class="nav nav-list box-right" style="display: none">
@@ -17,7 +23,9 @@
            class="cpan-author"
         >
         <%- IF contributor.pauseid || contributor.email.size -%>
-        <img class="gravatar" width="20" height="20" src="<% contributor.gravatar_image(20) %>" />
+        <img class="lazy-gravatar gravitar" width="20" height="20" 
+             src="https://metacpan.org/static/icons/metacpan-icon.png" 
+             data-src="<% contributor.gravatar_image(20) %>" />
         <%- END -%>
         <% contributor.name %></a>
         <% ELSE %>
